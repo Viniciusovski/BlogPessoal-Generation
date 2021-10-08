@@ -1,6 +1,7 @@
 package br.org.generation.blogpessoal.service;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.codec.binary.Base64;
@@ -18,6 +19,12 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	public List<Usuario> listarUsuarios(){
+
+		return usuarioRepository.findAll();
+
+	}
 	
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
