@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -55,6 +56,14 @@ public class UsuarioRepositoryTest {
 		List<Usuario> listaDeUsuarios = usuarioRepository.findAllByNomeContainingIgnoreCase("Silva");
 		assertEquals(3, listaDeUsuarios.size());
 	}
+	@Test
+	@DisplayName("💾 Retorna um usuario")
+	public void findByUsuarioRetornaUmUsuario() {
+		Optional<Usuario> user = usuarioRepository.findByUsuario("paulo@email.com.br");
+		assertTrue(user.isPresent());
+	}
+	
+	
 	@AfterAll
 	public void end() {
 		usuarioRepository.deleteAll();
