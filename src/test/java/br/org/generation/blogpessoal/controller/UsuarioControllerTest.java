@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.org.generation.blogpessoal.model.Usuario;
+import br.org.generation.blogpessoal.model.UsuarioLogin;
 import br.org.generation.blogpessoal.repository.UsuarioRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -54,7 +55,7 @@ public class UsuarioControllerTest {
 		HttpEntity<Usuario> request = new HttpEntity<Usuario>(usuario);
 		ResponseEntity<Usuario> resposta = testRestTemplate
 				.exchange("/usuarios/cadastrar", HttpMethod.POST, request, Usuario.class);
-		assertEquals(HttpStatus.OK, resposta.getStatusCode());
+		assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
 	}
 	
 	
@@ -70,6 +71,6 @@ public class UsuarioControllerTest {
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 
 	}
-	
+
 
 }

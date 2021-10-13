@@ -1,6 +1,5 @@
 package br.org.generation.blogpessoal.controller;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -23,40 +22,38 @@ import br.org.generation.blogpessoal.service.UsuarioService;
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
 	@GetMapping("/all")
-	public ResponseEntity <List<Usuario>> getAll(){
-		
+	public ResponseEntity<List<Usuario>> getAll() {
+
 		return ResponseEntity.ok(usuarioService.listarUsuarios());
-		
+
 	}
-	
+
 	@PostMapping("/logar")
-	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> user){
+	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> user) {
 		return usuarioService.autenticarUsuario(user)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
-	
+
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario){
-		Optional<Usuario> usuarioResp = usuarioService.cadastrarUsuario(usuario);
-		try {
-			return ResponseEntity.ok(usuarioResp.get());
-		} catch(Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario) {
+
+		return usuarioService.cadastrarUsuario(usuario)
+				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
-	
+
 	@PutMapping("/alterar")
-	public ResponseEntity<Usuario> putUsuario(@RequestBody Usuario usuario){
+	public ResponseEntity<Usuario> putUsuario(@RequestBody Usuario usuario) {
 		Optional<Usuario> usuarioResp = usuarioService.atualizarUsuario(usuario);
 		try {
 			return ResponseEntity.ok(usuarioResp.get());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
